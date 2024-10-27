@@ -29,6 +29,7 @@ class VehicleController extends Controller
         // Validate the incoming request data
         $validatedData = $request->validate([
             'vehicleType' => 'required|string|max:255',
+            'subClass' => 'nullable |string|in:Scooter,ElectricVehicle,CombustionVehicle,Bicycle', // Validate subclass
             'isElectric' => 'required|in:1,0',
             'maxSpeed' => 'required|numeric',
             'energyConsumption' => 'required|numeric',
@@ -41,8 +42,9 @@ class VehicleController extends Controller
         $validatedData['publicTransport'] = $validatedData['publicTransport'] === '1' ? true : false;
 
         // Call the API to store the vehicle
-        $response = Http::post('http://localhost:9090/ontology/vehicle/create', [
+        $response = Http::post('http://localhost:9090/ontology/vehicle/creates', [
             'vehicleType' => $validatedData['vehicleType'],
+            'subClass' => $validatedData['subClass'],
             'isElectric' => $validatedData['isElectric'],
             'maxSpeed' => $validatedData['maxSpeed'],
             'energyConsumption' => $validatedData['energyConsumption'],
@@ -56,7 +58,7 @@ class VehicleController extends Controller
             return redirect()->back()->withErrors(['error' => 'Failed to create vehicle.']);
         }
     }
-        public function destroy($id)
+    public function destroy($id)
     {
         $response = Http::delete('http://localhost:9090/ontology/vehicle/delete/' . $id);
 
@@ -66,6 +68,28 @@ class VehicleController extends Controller
             return redirect()->route('vehicle.index')->withErrors(['error' => 'Failed to delete vehicle.']);
         }
     }
+
+    public function search(Request $request)
+    {
+        $searchQuery = $request->query('q');
+        // If the search query is not provided, return all vehicles
+        if (!$searchQuery) {
+            return redirect()->route('vehicle.index');
+        }
+
+        // Call the ontology service to search for vehicles by type
+        $response = Http::get('http://localhost:9090/ontology/vehicle/search', [
+            'vehicleType' => $searchQuery,
+        ]);
+
+        if ($response->successful()) {
+            $vehicles = $response->json(); // Get the vehicles from the API
+            return view('vehicle.index', ['vehicles' => $vehicles]);
+        } else {
+            return redirect()->back()->withErrors(['error' => 'Failed to search vehicles.']);
+        }
+    }
+        
 
 
 }

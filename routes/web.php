@@ -46,5 +46,6 @@ Route::get('/vehicle', [VehicleController::class, 'index'])->name('vehicle.index
 Route::get('/vehicle/create', [VehicleController::class, 'create'])->name('vehicle.create');
 Route::post('/vehicle', [VehicleController::class, 'store'])->name('vehicle.store');
 Route::delete('/vehicle/{id}', [VehicleController::class, 'destroy'])->name('vehicle.destroy');
+Route::get('/vehicle/search', [VehicleController::class, 'search'])->name('vehicle.search');
 
 
