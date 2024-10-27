@@ -11,10 +11,11 @@
         @endif
 
         <div class="mb-4">
-            <a href="{{ route('distances.create') }}" class="inline-block bg-green-500 text-white px-4 py-2 rounded-lg shadow hover:bg-green-600 transition duration-200">
-                Add New Distance
-            </a>
-        </div>
+    <a href="{{ route('distances.create') }}" class="inline-block bg-green-500 text-white px-4 py-2 rounded-lg shadow hover:bg-green-600 transition duration-200">
+        Add New Distance
+    </a>
+</div>
+
 
         <div class="bg-white p-4 rounded-lg shadow mb-6">
             <form action="{{ route('distances.index') }}" method="GET" class="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -63,22 +64,19 @@
                             <td class="py-2 px-4 border-b">{{ $distance['longDistance'] ? 'Yes' : 'No' }}</td>
                             <td class="py-2 px-4 border-b">
                                 <div class="flex space-x-2">
-                                    <a href="{{ route('distances.edit', ['uri' => urlencode($distance['uri'])]) }}" 
+                                    <a href="#" 
                                        class="bg-blue-500 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-600 transition duration-200">
                                        Edit
                                     </a>
-                                    <form action="{{ route('distances.delete') }}?uri={{ urlencode($distance['uri']) }}" 
-                                          method="POST" 
-                                          onsubmit="return confirm('Are you sure you want to delete this distance?');"
-                                          class="inline">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" 
-                                                class="bg-red-500 text-white px-4 py-2 rounded-lg shadow hover:bg-red-600 transition duration-200">
-                                            Delete
-                                        </button>
-                                    </form>
-                                </div>
+                                                                            <!-- Delete button -->
+                                                                            <form action="{{ route('distances.delete') }}" method="POST" class="inline">
+                                @csrf
+                                @method('DELETE')
+                                <input type="hidden" name="uri" value="{{ $distance['uri']}}">
+                                <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded-lg shadow hover:bg-red-600 transition duration-200">
+                                    Delete Distance
+                                </button>
+                            </form>
                             </td>
                         </tr>
                     @empty
