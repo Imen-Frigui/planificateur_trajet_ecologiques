@@ -12,7 +12,7 @@
 
         <div class="mb-4">
             <a href="{{ route('chargingStations.create') }}" class="inline-block bg-green-500 text-white px-4 py-2 rounded-lg shadow hover:bg-green-600 transition duration-200">
-                Add New Weather Station
+                Add New Charging Station
             </a>
         </div>
 
@@ -24,6 +24,7 @@
                         <th class="py-2 px-4 text-left">Station URI</th>
                         <th class="py-2 px-4 text-left">Charging Speed (kW)</th>
                         <th class="py-2 px-4 text-left">Fast Charging</th>
+                        <th class="py-2 px-4 text-left">Actions</th>
                     </tr>
                 </thead>
                 <tbody class="text-gray-700">
@@ -37,10 +38,19 @@
                             </td>
                             <td class="py-2 px-4 border-b">{{ $station['chargingSpeed']['value'] ?? 'N/A' }} kW</td>
                             <td class="py-2 px-4 border-b">{{ $station['fastCharging']['value'] === 'true' ? 'Yes' : 'No' }}</td>
+                            <td class="py-2 px-4 border-b">
+                            <form action="{{ route('chargingStations.delete') }}?URI={{ urlencode($station['station']['value']) }}" 
+                                    method="POST" 
+                                    onsubmit="return confirm('Are you sure you want to delete this charging station?');">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded-lg shadow hover:bg-red-600 transition duration-200">Delete</button>
+                                </form>
+                            </td>
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="4" class="text-center py-4">No charging stations available.</td>
+                            <td colspan="5" class="text-center py-4">No charging stations available.</td>
                         </tr>
                     @endforelse
                 </tbody>

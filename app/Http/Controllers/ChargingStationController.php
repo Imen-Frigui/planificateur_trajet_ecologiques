@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log; 
 
 class ChargingStationController extends Controller
 {
@@ -47,7 +48,22 @@ class ChargingStationController extends Controller
             return redirect()->back()->withErrors(['error' => 'Failed to create charging station.']);
         }
     }
-
+    public function deleteChargingStation(Request $request)
+    {
+        $stationURI = $request->input('URI');
+        
+        $response = Http::delete('http://localhost:9090/charging?' . http_build_query([
+            'URI' => $stationURI
+        ]));
+    
+        if ($response->successful()) {
+            return redirect()->route('chargingStations.index')
+                ->with('success', 'Charging station deleted successfully.');
+        } else {
+            return redirect()->back()
+                ->withErrors(['error' => 'Failed to delete the charging station.']);
+        }
+    }
 
     
 

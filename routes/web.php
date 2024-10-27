@@ -35,3 +35,5 @@ Route::get('/chargingStations', [ChargingStationController::class, 'index'])->na
 Route::post('/chargingStations/add', [ChargingStationController::class, 'addChargingStation']);
 Route::get('/chargingStations/create', [ChargingStationController::class, 'create'])->name('chargingStations.create');
 Route::post('/chargingStations/store', [ChargingStationController::class, 'store'])->name('chargingStations.store');
+// Route::delete('/chargingStations/delete', [ChargingStationController::class, 'destroy'])->name('chargingStations.delete');
+Route::delete('/charging-station', action: [ChargingStationController::class, 'deleteChargingStation'])->name('chargingStations.delete');
