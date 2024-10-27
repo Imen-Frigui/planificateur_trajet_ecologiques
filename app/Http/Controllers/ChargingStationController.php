@@ -80,45 +80,63 @@ class ChargingStationController extends Controller
         }
     }
     public function edit($uri)
-    {
-        try {
-            $encodedUri = urlencode($uri);
-            
-            $response = Http::get('http://localhost:9090/charging/uri?URI=' . http_build_query([
-                'URI' => $encodedUri
-            ]));
-            \Log::error(' $data found:', ['message' => $response]);
-            if ($response->successful()) {
-    
-                $data = json_decode($response->body(), true);
-                \Log::error(' $data found:', ['message' => $data]);
+{
+    try {
+        // Decode the URI parameter if it's URL encoded
+        $decodedUri = urldecode($uri);
+        
+        \Log::info('Decoded URI:', ['uri' => $decodedUri]);
 
-                if (!empty($data) && is_array($data) && count($data) > 0) {
-                    $station = $data[0];
-                    return view('chargingStations.edit', ['station' => $station]);
-                } else {
-                    \Log::error('No bindings found:', ['message' => $data]);
-                    return redirect()->route('chargingStations.index')
-                        ->with('error', 'No charging station details found.');
-                }
-            } else {
-                \Log::error('Exception occurred:', ['message' => $response]);
-                return redirect()->route('chargingStations.index')
-                    ->with('error', 'Failed to fetch charging station details.');
+        $response = Http::get('http://localhost:9090/charging/uri', [
+            'URI' => $decodedUri
+        ]);
+
+        if ($response->successful()) {
+            $data = json_decode($response->body(), true);
+            
+            if (!empty($data) && is_array($data) && count($data) > 0) {
+                $station = [
+                    'station' => [
+                        'value' => $decodedUri 
+                    ],
+                    'stationType' => $data[0]['stationType']['value'],
+                    'chargingSpeed' => $data[0]['chargingSpeed']['value'],
+                    'fastCharging' => $data[0]['fastCharging']['value']
+                ];
+                
+                return view('chargingStations.edit', compact('station'));
             }
-        } catch (\Exception $e) {
-            \Log::error('edddddd:', ['message' => $e]);
+            
             return redirect()->route('chargingStations.index')
-                ->with('error', 'An error occurred while fetching the charging station: ' . $e->getMessage());
+                ->with('error', 'No charging station details found.');
         }
+        
+        return redirect()->route('chargingStations.index')
+            ->with('error', 'Failed to fetch charging station details.');
+            
+    } catch (\Exception $e) {
+        \Log::error('Exception in edit method', [
+            'message' => $e->getMessage(),
+            'trace' => $e->getTraceAsString()
+        ]);
+        
+        return redirect()->route('chargingStations.index')
+            ->with('error', 'An error occurred while fetching the charging station: ' . $e->getMessage());
     }
+}
+
+
     
 
     public function update($uri, Request $request)
 {
     try {
-        $encodedUri = urlencode($uri);
-        
+
+        $encodedUri = urlencode(string: $uri);
+        \Log::error('Exception in edit method', [
+            'message' => $encodedUri,
+            
+        ]);
         $response = Http::put("http://localhost:9090/charging/{$encodedUri}", [
             'chargingSpeed' => $request->chargingSpeed,
             'fastCharging' => $request->fastCharging,
@@ -129,9 +147,17 @@ class ChargingStationController extends Controller
             return redirect()->route('chargingStations.index')
                 ->with('success', 'Charging station updated successfully.');
         } else {
+            \Log::error('Exception in edit method', [
+                'message' => $response,
+                
+            ]);
             return back()->with('error', 'Failed to update charging station.');
         }
     } catch (\Exception $e) {
+        \Log::error('Exception in edit method', [
+            'message' => $e->getMessage(),
+            'trace' => $e->getTraceAsString()
+        ]);
         return back()->with('error', 'An error occurred: ' . $e->getMessage());
     }
 }

@@ -83,9 +83,9 @@
                             <td class="py-2 px-4 border-b">
                             <div class="flex space-x-2">
                             <a href="{{ route('chargingStations.edit', ['uri' => urlencode($station['station']['value'])]) }}" 
-                                                    class="bg-blue-500 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-600 transition duration-200">
-                                                        Edit
-                                                    </a>
+                            class="bg-blue-500 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-600 transition duration-200">
+                                                                            Edit
+                                                                        </a>
                                     <form action="{{ route('chargingStations.delete') }}?URI={{ urlencode($station['station']['value']) }}" 
                                         method="POST" 
                                         onsubmit="return confirm('Are you sure you want to delete this charging station?');"
