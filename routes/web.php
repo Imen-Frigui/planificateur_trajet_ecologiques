@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\WeatherController;
+use App\Http\Controllers\RouteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,3 +28,9 @@ Route::get('/contact', [ContactController::class, 'show'])->name('contact.show')
 Route::get('/weather', [WeatherController::class, 'index'])->name('weather.index');
 Route::get('/weather/create', [WeatherController::class, 'create'])->name('weather.create');
 Route::post('/weather', [WeatherController::class, 'store'])->name('weather.store');
+
+
+
+Route::get('/routes', [RouteController::class, 'index'])->name('routes.index');
+Route::get('/routes/create', [RouteController::class, 'create'])->name('routes.create');
+Route::post('/routes', [RouteController::class, 'store'])->name('routes.store');
