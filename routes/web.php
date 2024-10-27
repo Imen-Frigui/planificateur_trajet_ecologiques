@@ -37,3 +37,11 @@ Route::get('/chargingStations/create', [ChargingStationController::class, 'creat
 Route::post('/chargingStations/store', [ChargingStationController::class, 'store'])->name('chargingStations.store');
 // Route::delete('/chargingStations/delete', [ChargingStationController::class, 'destroy'])->name('chargingStations.delete');
 Route::delete('/charging-station', action: [ChargingStationController::class, 'deleteChargingStation'])->name('chargingStations.delete');
+
+Route::get('/chargingStations/{uri}/edit', [ChargingStationController::class, 'edit'])
+    ->name('chargingStations.edit')
+    ->where('uri', '.*');
+
+Route::put('/chargingStations/{uri}', [ChargingStationController::class, 'update'])
+    ->name('chargingStations.update')
+    ->where('uri', '.*');
