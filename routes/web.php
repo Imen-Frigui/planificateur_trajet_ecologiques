@@ -5,6 +5,8 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\WeatherController;
 use App\Http\Controllers\ChargingStationController;
+use App\Http\Controllers\PublicTransportController;
+use App\Http\Controllers\DurationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,3 +39,16 @@ Route::get('/chargingStations/create', [ChargingStationController::class, 'creat
 Route::post('/chargingStations/store', [ChargingStationController::class, 'store'])->name('chargingStations.store');
 // Route::delete('/chargingStations/delete', [ChargingStationController::class, 'destroy'])->name('chargingStations.delete');
 Route::delete('/charging-station', action: [ChargingStationController::class, 'deleteChargingStation'])->name('chargingStations.delete');
+
+// Public Transport routes
+Route::get('/public-transport', [PublicTransportController::class, 'index'])->name('public-transport.index'); // Note: Use lowercase
+Route::get('/public-transport/{id}', [PublicTransportController::class, 'show']);
+Route::get('/transport/create', [PublicTransportController::class, 'create'])->name('public-transport.create');
+Route::post('/public-transport', [PublicTransportController::class, 'store'])->name('public-transport.store');
+Route::put('/public-transport/{id}', [PublicTransportController::class, 'update']);
+Route::delete('/public-transport/{id}', [PublicTransportController::class, 'destroy']);
+
+//Duration
+Route::get('/duration', [DurationController::class, 'index'])->name('duration.index'); // Note: Use lowercase
+Route::get('/duration/create', [DurationController::class, 'create'])->name('duration.create');
+Route::post('/duration', [DurationController::class, 'store'])->name('duration.store');

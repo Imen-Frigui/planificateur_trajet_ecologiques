@@ -14,7 +14,11 @@
             <a href="{{ route('home') }}" class="text-white text-lg font-bold">Eco Route Planner</a>
             <div>
                 <a href="{{ route('home') }}" class="text-white px-4 hover:bg-green-600 transition">Home</a>
+                <a href="{{ route('public-transport.index') }}" class="text-white px-4 hover:bg-green-600 transition">Public Transport</a>
+                <a href="{{ route('duration.index') }}" class="text-white px-4 hover:bg-green-600 transition">Duration</a>
+
                 <a href="{{ route('chargingStations.index') }}" class="text-white px-4 hover:bg-green-600 transition">Charging Stations</a>
+
                 <a href="{{ route('weather.index') }}" class="text-white px-4 hover:bg-green-600 transition">All Weather Conditions</a>
             </div>
         </div>
