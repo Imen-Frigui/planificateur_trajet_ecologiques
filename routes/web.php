@@ -5,6 +5,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\WeatherController;
 use App\Http\Controllers\RouteController;
+use App\Http\Controllers\ChargingStationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,3 +35,9 @@ Route::post('/weather', [WeatherController::class, 'store'])->name('weather.stor
 Route::get('/routes', [RouteController::class, 'index'])->name('routes.index');
 Route::get('/routes/create', [RouteController::class, 'create'])->name('routes.create');
 Route::post('/routes', [RouteController::class, 'store'])->name('routes.store');
+
+//ChargingStations
+Route::get('/chargingStations', [ChargingStationController::class, 'index'])->name('chargingStations.index');
+Route::post('/chargingStations/add', [ChargingStationController::class, 'addChargingStation']);
+Route::get('/chargingStations/create', [ChargingStationController::class, 'create'])->name('chargingStations.create');
+Route::post('/chargingStations/store', [ChargingStationController::class, 'store'])->name('chargingStations.store');
