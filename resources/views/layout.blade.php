@@ -11,6 +11,8 @@
         <ul>
             <li><a href="{{ route('weather.index') }}">All Weather Conditions</a></li>
             <li><a href="{{ route('weather.create') }}">Create Weather Condition</a></li>
+            <li><a href="{{ route('distances.index') }}">Distances</a></li>
+
         </ul>
     </nav>
     
