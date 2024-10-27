@@ -3,6 +3,7 @@
 @section('title', 'Duration Management')
 
 @section('content')
+<script src="{{ asset('resources/js/deleteDuration.js') }}"></script>
 
     <div class="container mx-auto px-4 py-6">
         <h2 class="text-2xl font-bold mb-4">Duration Management</h2>
@@ -12,13 +13,13 @@
         </div>
 
         @if(session('success'))
-            <div class="bg-green-500 text-white p-4 rounded-lg mb-4">
+            <div id="success-alert" class="bg-green-500 text-white p-4 rounded-lg mb-4">
                 {{ session('success') }}
             </div>
         @endif
 
         @if($errors->any())
-            <div class="bg-red-500 text-white p-4 rounded-lg mb-4">
+            <div id="error-alert" class="bg-red-500 text-white p-4 rounded-lg mb-4">
                 @foreach ($errors->all() as $error)
                     <p>{{ $error }}</p>
                 @endforeach
@@ -40,17 +41,18 @@
                     <tbody class="text-gray-700">
                         @foreach($durations as $duration)
                             <tr class="hover:bg-gray-100 transition duration-200">
-                                <td class="py-2 px-4 border-b">{{ $duration['exactDuration']['value']  ?? 'N/A' }}</td>
-                                <td class="py-2 px-4 border-b">{{ $duration['longDuration'] ['value'] ? 'Yes' : 'No' }}</td>
-                                <td class="py-2 px-4 border-b">{{ $duration['mediumDuration']['value']  ? 'Yes' : 'No' }}</td>
+                                <td class="py-2 px-4 border-b">{{ $duration['exactDuration']['value'] ?? 'N/A' }}</td>
+                                <td class="py-2 px-4 border-b">{{ $duration['longDuration']['value'] ? 'Yes' : 'No' }}</td>
+                                <td class="py-2 px-4 border-b">{{ $duration['mediumDuration']['value'] ? 'Yes' : 'No' }}</td>
                                 <td class="py-2 px-4 border-b">{{ $duration['shortDuration']['value'] ? 'Yes' : 'No' }}</td>
                                 <td class="py-2 px-4 border-b">
                                     <a href="#" class="text-blue-500 hover:text-blue-600">Edit</a>
-                                    <form action="#" method="POST" class="inline">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="text-red-500 hover:text-red-600">Delete</button>
-                                    </form>
+                                    <form action="{{ route('duration.destroy', ['id' => substr($duration['duration']['value'], strrpos($duration['duration']['value'], '_') + 1)]) }}" method="POST" class="inline" onsubmit="return confirm('Are you sure you want to delete this duration?');">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="text-red-500 hover:text-red-600">Delete</button>
+                        </form>
+
                                 </td>
                             </tr>
                         @endforeach
@@ -61,4 +63,20 @@
             <p>No durations available.</p>
         @endif
     </div>
+
+    <script>
+        function showDeleteAlert() {
+            // Create a temporary success alert
+            const alertBox = document.createElement('div');
+            alertBox.className = "bg-green-500 text-white p-4 rounded-lg mb-4";
+            alertBox.innerText = "Duration deleted successfully!";
+            document.querySelector('.container').prepend(alertBox);
+
+            // Fade out the alert after 3 seconds
+            setTimeout(function() {
+                alertBox.classList.add('opacity-0', 'transition-opacity', 'duration-1000');
+                alertBox.remove(); // Remove it from DOM after fading out
+            }, 3000);
+        }
+    </script>
 @endsection

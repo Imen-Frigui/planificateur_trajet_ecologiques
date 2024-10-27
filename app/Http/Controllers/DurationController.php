@@ -12,16 +12,16 @@ class DurationController extends Controller
     public function index()
     {
         $response = Http::get($this->apiUrl);
-    
+
         if ($response->failed()) {
             return response()->json(['error' => 'Failed to fetch durations'], $response->status());
         }
-    
+
         // Log the response to see its structure
         \Log::info($response->json());
-    
+
         $durations = $response->json(); // Assuming this returns an array of durations
-    
+
         return view('Duration.index', compact('durations'));
     }
 
@@ -51,11 +51,10 @@ class DurationController extends Controller
             'shortDuration' => 'required|in:1,0',
         ]);
 
-
-         // Convert '1'/'0' strings to boolean values
-    $validatedData['longDuration'] = $validatedData['longDuration'] === '1';
-    $validatedData['mediumDuration'] = $validatedData['mediumDuration'] === '1';
-    $validatedData['shortDuration'] = $validatedData['shortDuration'] === '1';
+        // Convert '1'/'0' strings to boolean values
+        $validatedData['longDuration'] = $validatedData['longDuration'] === '1';
+        $validatedData['mediumDuration'] = $validatedData['mediumDuration'] === '1';
+        $validatedData['shortDuration'] = $validatedData['shortDuration'] === '1';
 
         // Prepare the data for the API
         $apiData = [
@@ -109,9 +108,10 @@ class DurationController extends Controller
         $response = Http::delete("{$this->apiUrl}/{$id}");
 
         if ($response->failed()) {
-            return response()->json(['error' => 'Failed to delete duration'], $response->status());
+            // Optional: Handle specific failure messages if needed
+            return redirect()->route('duration.index')->withErrors(['error' => 'Failed to delete duration.']);
         }
 
-        return response()->json(['message' => 'Duration deleted successfully'], $response->status());
+        return redirect()->route('duration.index')->with('success', 'Duration deleted successfully!');
     }
 }

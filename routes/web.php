@@ -46,9 +46,10 @@ Route::get('/public-transport/{id}', [PublicTransportController::class, 'show'])
 Route::get('/transport/create', [PublicTransportController::class, 'create'])->name('public-transport.create');
 Route::post('/public-transport', [PublicTransportController::class, 'store'])->name('public-transport.store');
 Route::put('/public-transport/{id}', [PublicTransportController::class, 'update']);
-Route::delete('/public-transport/{id}', [PublicTransportController::class, 'destroy']);
+Route::delete('/public-transport/{id}', [PublicTransportController::class, 'destroy'])->name('public-transport.destroy');
 
 //Duration
 Route::get('/duration', [DurationController::class, 'index'])->name('duration.index'); // Note: Use lowercase
 Route::get('/duration/create', [DurationController::class, 'create'])->name('duration.create');
 Route::post('/duration', [DurationController::class, 'store'])->name('duration.store');
+Route::delete('/duration/{id}', [DurationController::class, 'destroy'])->name('duration.destroy');

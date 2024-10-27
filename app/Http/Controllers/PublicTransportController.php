@@ -131,15 +131,28 @@ private function formatDateTime($dateTime)
 
 
 
-
     public function destroy($id)
     {
+        // Send a DELETE request to the external API
         $response = Http::delete("{$this->apiUrl}/{$id}");
-
+    
+        // Check if the response failed
         if ($response->failed()) {
-            return response()->json(['error' => 'Failed to delete public transport'], $response->status());
+            // Log the error response for debugging
+            \Log::error('Failed to delete duration:', [
+                'id' => $id,
+                'status' => $response->status(),
+                'body' => $response->body(),
+            ]);
+    
+            // Redirect back with an error message
+            return redirect()->route('public-transport.index')->withErrors(['error' => 'Failed to delete duration']);
         }
-
-        return response()->json(['message' => 'Public transport deleted successfully'], $response->status());
+    
+        // Redirect back to the index route with a success message
+        return redirect()->route('public-transport.index')->with('success', 'Duration deleted successfully');
     }
+    
+    
+    
 }
