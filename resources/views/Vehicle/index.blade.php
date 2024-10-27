@@ -7,10 +7,19 @@
         <div class="flex justify-between items-center mb-6">
             <h1 class="text-2xl font-bold text-gray-800">Vehicles</h1>
             <!-- Search Form -->
-            <form action="{{ route('vehicle.search') }}" method="GET" class="flex">
-                <input type="text" name="q" placeholder="Search by vehicle type..." class="border rounded-lg p-2 mr-2">
-                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-200">Search</button>
-            </form>            
+            <form action="{{ route('vehicle.search') }}" method="GET" class="mb-6">
+                <div class="flex items-center space-x-4">
+                    <input type="text" name="q" placeholder="Search by vehicle type..." class="border rounded-lg p-2" value="{{ request()->query('q') }}">
+                    <input type="number" name="minSpeed" placeholder="Min Speed (km/h)" class="border rounded-lg p-2" value="{{ request()->query('minSpeed') }}">
+                    <input type="number" name="maxSpeed" placeholder="Max Speed (km/h)" class="border rounded-lg p-2" value="{{ request()->query('maxSpeed') }}">
+                    <select name="isElectric" class="border rounded-lg p-2">
+                        <option value="">-- Electric --</option>
+                        <option value="true" {{ request()->query('isElectric') == 'true' ? 'selected' : '' }}>Yes</option>
+                        <option value="false" {{ request()->query('isElectric') == 'false' ? 'selected' : '' }}>No</option>
+                    </select>
+                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-200">Search</button>
+                </div>
+            </form>
             <!-- Add Create Button -->
             <a href="{{ route('vehicle.create') }}" class="bg-green-500 text-white px-4 py-2 rounded-lg shadow hover:bg-green-600 transition duration-200">
                 Add Vehicle
@@ -28,7 +37,7 @@
             </div>
         @endif
 
-        @if(count($vehicles['results']['bindings']) > 0)
+        @if(isset($vehicles['results']['bindings']) && count($vehicles['results']['bindings']) > 0)
             <table class="min-w-full bg-white">
                 <thead class="bg-gray-800 text-white">
                     <tr>
@@ -47,7 +56,6 @@
                         <tr class="border-b">
                             <td class="px-4 py-2">{{ $vehicle['vehicleType']['value'] }}</td>
                             <td class="px-4 py-2">{{ $vehicle['subClass']['value'] ?? 'N/A' }}</td>
-                            {{-- <td>{{ last(explode('#', $vehicle['subClass']['value'])) }}</td> <!-- Display Subclass --> --}}
                             <td class="px-4 py-2">{{ $vehicle['isElectric']['value'] === 'true' ? 'Yes' : 'No' }}</td>
                             <td class="px-4 py-2">{{ $vehicle['maxSpeed']['value'] }} km/h</td>
                             <td class="px-4 py-2">{{ $vehicle['energyConsumption']['value'] }} kWh</td>

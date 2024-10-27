@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
+
 class VehicleController extends Controller
 {
     public function index()
@@ -69,26 +70,33 @@ class VehicleController extends Controller
         }
     }
 
-    public function search(Request $request)
-    {
-        $searchQuery = $request->query('q');
-        // If the search query is not provided, return all vehicles
-        if (!$searchQuery) {
-            return redirect()->route('vehicle.index');
-        }
 
-        // Call the ontology service to search for vehicles by type
-        $response = Http::get('http://localhost:9090/ontology/vehicle/search', [
-            'vehicleType' => $searchQuery,
-        ]);
 
-        if ($response->successful()) {
-            $vehicles = $response->json(); // Get the vehicles from the API
-            return view('vehicle.index', ['vehicles' => $vehicles]);
-        } else {
-            return redirect()->back()->withErrors(['error' => 'Failed to search vehicles.']);
-        }
+public function search(Request $request)
+{
+    // Get search query parameters from the request
+    $searchQuery = $request->query('q');
+    $minSpeed = $request->query('minSpeed');
+    $maxSpeed = $request->query('maxSpeed');
+    $isElectric = $request->query('isElectric');
+
+    // Call the backend ontology service for vehicle search
+    $response = Http::get('http://localhost:9090/ontology/vehicle/search', [
+        'vehicleType' => $searchQuery,
+        'minSpeed' => $minSpeed,
+        'maxSpeed' => $maxSpeed,
+        'isElectric' => $isElectric,
+    ]);
+
+    // If the API call is successful, retrieve and pass the vehicles to the view
+    if ($response->successful()) {
+        $vehicles = $response->json();
+        return view('vehicle.index', ['vehicles' => $vehicles]);
+    } else {
+        return redirect()->back()->withErrors(['error' => 'Failed to search vehicles.']);
     }
+}
+
         
 
 

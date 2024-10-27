@@ -68,6 +68,26 @@ class WeatherController extends Controller
         }
     }
 
+    public function searchWeather(Request $request)
+    {
+        $searchQuery = $request->query('weatherType'); // Example of filtering by weather type
+
+        // Build the query parameters for the API call
+        $params = [
+            'weatherType' => $searchQuery
+        ];
+
+        // Call the ontology weather search API
+        $response = Http::get('http://localhost:9090/ontology/weather', $params);
+
+        if ($response->successful()) {
+            $weathers = $response->json(); // Get the weather conditions from the API
+            return view('weather.index', ['weathers' => $weathers]);
+        } else {
+            return redirect()->back()->withErrors(['error' => 'Failed to retrieve weather data.']);
+        }
+    }
+
 
 
 
