@@ -6,6 +6,7 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\WeatherController;
 use App\Http\Controllers\RouteController;
 use App\Http\Controllers\ChargingStationController;
+use App\Http\Controllers\VehicleController;
 use App\Http\Controllers\SpeedController;
 use App\Http\Controllers\DistanceController;
 use App\Http\Controllers\TrafficController;
@@ -30,10 +31,14 @@ Route::get('/', function () {
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/contact', [ContactController::class, 'show'])->name('contact.show');
 
-//WeatherCondition 
+//WeatherCondition
 Route::get('/weather', [WeatherController::class, 'index'])->name('weather.index');
 Route::get('/weather/create', [WeatherController::class, 'create'])->name('weather.create');
 Route::post('/weather', [WeatherController::class, 'store'])->name('weather.store');
+Route::delete('/weather/{id}', [WeatherController::class, 'destroy'])->name('weather.destroy');
+Route::get('/weather/search', [WeatherController::class, 'searchWeather'])->name('weather.search');
+Route::get('/weather/{id}', [WeatherController::class, 'show'])->name('weather.show');
+
 
 
 
@@ -61,6 +66,15 @@ Route::get('/chargingStations/create', [ChargingStationController::class, 'creat
 Route::post('/chargingStations/store', [ChargingStationController::class, 'store'])->name('chargingStations.store');
 // Route::delete('/chargingStations/delete', [ChargingStationController::class, 'destroy'])->name('chargingStations.delete');
 Route::delete('/charging-station', action: [ChargingStationController::class, 'deleteChargingStation'])->name('chargingStations.delete');
+
+// Vehicle Routes
+Route::get('/vehicle', [VehicleController::class, 'index'])->name('vehicle.index');
+Route::get('/vehicle/create', [VehicleController::class, 'create'])->name('vehicle.create');
+Route::post('/vehicle', [VehicleController::class, 'store'])->name('vehicle.store');
+Route::delete('/vehicle/{id}', [VehicleController::class, 'destroy'])->name('vehicle.destroy');
+Route::get('/vehicle/search', [VehicleController::class, 'search'])->name('vehicle.search');
+Route::get('/vehicle/{id}', [VehicleController::class, 'show'])->name('vehicle.show');
+
 
 Route::get('/chargingStations/{uri}/edit', [ChargingStationController::class, 'edit'])
     ->name('chargingStations.edit')
