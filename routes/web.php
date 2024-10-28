@@ -5,6 +5,8 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\WeatherController;
 use App\Http\Controllers\ChargingStationController;
+use App\Http\Controllers\DistanceController;
+
 use App\Http\Controllers\TrafficController;
 
 
@@ -48,6 +50,15 @@ Route::get('/chargingStations/{uri}/edit', [ChargingStationController::class, 'e
 Route::put('/chargingStations/{uri}', [ChargingStationController::class, 'update'])
     ->name('chargingStations.update')
     ->where('uri', '.*');
+
+
+    // Other routes...
+    
+    Route::get('/distances', [DistanceController::class, 'index'])->name('distances.index');
+    Route::get('/distances/create', [DistanceController::class, 'create'])->name('distances.create');
+    Route::post('/distances', [DistanceController::class, 'store'])->name('distances.store');
+    Route::delete('/distances/delete', [DistanceController::class, 'deleteDistance'])->name('distances.delete');
+     
 
     Route::get('/trafficConditions', [TrafficController::class, 'index'])->name('trafficConditions.index');
 
