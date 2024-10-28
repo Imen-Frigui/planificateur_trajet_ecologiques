@@ -6,6 +6,9 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\WeatherController;
 use App\Http\Controllers\RouteController;
 use App\Http\Controllers\ChargingStationController;
+use App\Http\Controllers\PublicTransportController;
+use App\Http\Controllers\DurationController;
+
 use App\Http\Controllers\VehicleController;
 use App\Http\Controllers\SpeedController;
 use App\Http\Controllers\DistanceController;
@@ -67,6 +70,19 @@ Route::post('/chargingStations/store', [ChargingStationController::class, 'store
 // Route::delete('/chargingStations/delete', [ChargingStationController::class, 'destroy'])->name('chargingStations.delete');
 Route::delete('/charging-station', action: [ChargingStationController::class, 'deleteChargingStation'])->name('chargingStations.delete');
 
+// Public Transport routes
+Route::get('/public-transport', [PublicTransportController::class, 'index'])->name('public-transport.index'); // Note: Use lowercase
+Route::get('/public-transport/{id}', [PublicTransportController::class, 'show']);
+Route::get('/transport/create', [PublicTransportController::class, 'create'])->name('public-transport.create');
+Route::post('/public-transport', [PublicTransportController::class, 'store'])->name('public-transport.store');
+Route::put('/public-transport/{id}', [PublicTransportController::class, 'update']);
+Route::delete('/public-transport/{id}', [PublicTransportController::class, 'destroy'])->name('public-transport.destroy');
+
+//Duration
+Route::get('/duration', [DurationController::class, 'index'])->name('duration.index'); // Note: Use lowercase
+Route::get('/duration/create', [DurationController::class, 'create'])->name('duration.create');
+Route::post('/duration', [DurationController::class, 'store'])->name('duration.store');
+Route::delete('/duration/{id}', [DurationController::class, 'destroy'])->name('duration.destroy');
 // Vehicle Routes
 Route::get('/vehicle', [VehicleController::class, 'index'])->name('vehicle.index');
 Route::get('/vehicle/create', [VehicleController::class, 'create'])->name('vehicle.create');
