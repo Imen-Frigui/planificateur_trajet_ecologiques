@@ -7,6 +7,10 @@ use App\Http\Controllers\WeatherController;
 use App\Http\Controllers\RouteController;
 use App\Http\Controllers\ChargingStationController;
 use App\Http\Controllers\SpeedController;
+use App\Http\Controllers\DistanceController;
+use App\Http\Controllers\TrafficController;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -55,3 +59,42 @@ Route::get('/chargingStations', [ChargingStationController::class, 'index'])->na
 Route::post('/chargingStations/add', [ChargingStationController::class, 'addChargingStation']);
 Route::get('/chargingStations/create', [ChargingStationController::class, 'create'])->name('chargingStations.create');
 Route::post('/chargingStations/store', [ChargingStationController::class, 'store'])->name('chargingStations.store');
+// Route::delete('/chargingStations/delete', [ChargingStationController::class, 'destroy'])->name('chargingStations.delete');
+Route::delete('/charging-station', action: [ChargingStationController::class, 'deleteChargingStation'])->name('chargingStations.delete');
+
+Route::get('/chargingStations/{uri}/edit', [ChargingStationController::class, 'edit'])
+    ->name('chargingStations.edit')
+    ->where('uri', '.*');
+
+Route::put('/chargingStations/{uri}', [ChargingStationController::class, 'update'])
+    ->name('chargingStations.update')
+    ->where('uri', '.*');
+
+
+    // Other routes...
+    
+    Route::get('/distances', [DistanceController::class, 'index'])->name('distances.index');
+    Route::get('/distances/create', [DistanceController::class, 'create'])->name('distances.create');
+    Route::post('/distances', [DistanceController::class, 'store'])->name('distances.store');
+    Route::delete('/distances/delete', [DistanceController::class, 'deleteDistance'])->name('distances.delete');
+     
+
+    Route::get('/trafficConditions', [TrafficController::class, 'index'])->name('trafficConditions.index');
+
+    Route::post('/trafficConditions/add', [TrafficController::class, 'add']);
+    Route::get('/trafficConditions/create', [TrafficController::class, 'create'])->name('trafficConditions.create');
+    Route::post('/trafficConditions/store', [TrafficController::class, 'store'])->name('trafficConditions.store');
+    Route::delete('/traffic-condition', [TrafficController::class, 'deleteTrafficCondition'])->name('trafficConditions.delete');
+
+
+    
+    Route::get('/trafficConditions/{id}/edit', [TrafficController::class, 'edit'])
+    ->name('trafficConditions.edit')
+    ->where('id', '.*'); 
+
+
+Route::put('/trafficConditions/{id}', [TrafficController::class, 'update'])
+    ->name('trafficConditions.update')
+    ->where('id', '.*');
+
+    
