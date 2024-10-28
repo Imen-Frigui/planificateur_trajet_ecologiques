@@ -15,6 +15,7 @@
             <div>
                 <a href="{{ route('home') }}" class="text-white px-4 hover:bg-green-600 transition">Home</a>
                 <a href="{{ route('chargingStations.index') }}" class="text-white px-4 hover:bg-green-600 transition">Charging Stations</a>
+                <a href="{{ route('routes.index') }}" class="text-white px-4 hover:bg-green-600 transition">Routes</a>
                 <a href="{{ route('weather.index') }}" class="text-white px-4 hover:bg-green-600 transition">All Weather Conditions</a>
             </div>
         </div>
