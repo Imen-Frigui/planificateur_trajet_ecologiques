@@ -18,8 +18,12 @@
                 <a href="{{ route('duration.index') }}" class="text-white px-4 hover:bg-green-600 transition">Duration</a>
 
                 <a href="{{ route('chargingStations.index') }}" class="text-white px-4 hover:bg-green-600 transition">Charging Stations</a>
-
+                <a href="{{ route('vehicle.index') }}" class="text-white px-4 hover:bg-green-600 transition">Vehicles</a>
+                <a href="{{ route('routes.index') }}" class="text-white px-4 hover:bg-green-600 transition">Routes</a>
                 <a href="{{ route('weather.index') }}" class="text-white px-4 hover:bg-green-600 transition">All Weather Conditions</a>
+                <a href="{{ route('distances.index') }}" class="text-white px-4 hover:bg-green-600 transition">Diffrent distances</a> 
+                <a href="{{ route('trafficConditions.index') }}" class="text-white px-4 hover:bg-green-600 transition">Traffic Conditions</a>  
+
             </div>
         </div>
     </nav>
