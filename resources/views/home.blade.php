@@ -14,9 +14,19 @@
                 <a href="{{ route('chargingStations.index') }}" class="mt-4 inline-block bg-green-600 text-white py-2 px-4 rounded hover:bg-green-700 transition">Explore Now</a>
             </div>
             <div class="bg-white rounded-lg shadow-lg p-4">
-                <h2 class="text-3xl font-semibold mb-2 text-green-600">🚗 Plan Your Route</h2>
-                <p class="text-gray-700">Plan your journey with optimized routes that minimize carbon emissions and enhance efficiency.</p>
-            </div>
+    <h2 class="text-3xl font-semibold mb-2 text-green-600">🚗 Plan Your Route</h2>
+    <p class="text-gray-700">Plan your journey with optimized routes that minimize carbon emissions and enhance efficiency.</p>
+
+    <!-- Button to view speeds table -->
+    <a href="{{ route('speeds.index') }}" class="mt-4 inline-block bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700 transition mr-2">
+        Allowed Speeds
+    </a>
+
+    <!-- Button to view routes table -->
+    <a href="{{ route('routes.index') }}" class="mt-4 inline-block bg-green-600 text-white py-2 px-4 rounded hover:bg-green-700 transition">
+        Discover Economical Routes
+    </a>
+</div>
             <div class="bg-red rounded-lg shadow-lg p-4">
                 <h2 class="text-3xl font-semibold mb-2 text-green-600">🌦️ Real-time Weather Updates</h2>
                 <p class="text-gray-700">Stay informed with real-time weather updates, helping you to plan your trip accordingly.</p>
