@@ -49,6 +49,8 @@
                         <th class="w-1/5 text-left py-3 px-4 mx-6 uppercase font-semibold text-sm">CO2 Emission Rate</th>
                         <th class="w-1/5 text-left py-3 px-4 mx-6 uppercase font-semibold text-sm">Public Transport</th>
                         <th class="w-1/5 text-left py-3 px-4 uppercase font-semibold text-sm">Actions</th>
+                        <th class="w-1/5 text-left py-3 px-4 uppercase font-semibold text-sm"></th>
+
                     </tr>
                 </thead>
                 <tbody>
@@ -62,6 +64,13 @@
                             <td class="px-4 py-2">{{ $vehicle['co2EmissionRate']['value'] }} g/km</td>
                             <td class="px-4 py-2">{{ $vehicle['publicTransport']['value'] === 'true' ? 'Yes' : 'No' }}</td>
                             <td class="px-4 py-2">
+                                @php
+                                    $id = last(explode('#', $vehicle['vehicle']['value']));
+                                @endphp
+                                <a href="{{ route('vehicle.show', $id) }}" class="bg-blue-500 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-600 transition duration-200">View</a>
+                            </td>
+                            <td class="px-4 py-2">
+                                <!-- Delete Form -->
                                 @php
                                     $id = last(explode('#', $vehicle['vehicle']['value']));
                                 @endphp

@@ -41,6 +41,7 @@
                             <th class="w-1/5 text-left py-3 px-4 uppercase font-semibold text-sm">Rainy</th>
                             <th class="w-1/5 text-left py-3 px-4 uppercase font-semibold text-sm">Temperature (°C)</th>
                             <th class="text-left py-3 px-4"></th>
+                            <th class="text-left py-3 px-4"></th>
                         </tr>
                     </thead>
                     <tbody class="text-gray-700">
@@ -51,6 +52,12 @@
                                 <td class="text-left py-3 px-4">{{ $condition['snowy']['value'] }}</td>
                                 <td class="text-left py-3 px-4">{{ $condition['rainy']['value'] }}</td>
                                 <td class="text-left py-3 px-4">{{ $condition['temperature']['value'] }}</td>
+                                <td class="text-left py-3 px-4">
+                                    @php
+                                        $id = last(explode('#', $condition['weather']['value']));
+                                    @endphp
+                                    <a href="{{ route('weather.show', $id) }}" class="bg-blue-500 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-600 transition duration-200">View</a>
+                                </td>                                
                                 <td class="text-left py-3 px-4">
                                     @php
                                         $id = last(explode('#', $condition['weather']['value']));

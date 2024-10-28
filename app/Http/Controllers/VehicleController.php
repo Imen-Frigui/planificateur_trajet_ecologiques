@@ -97,6 +97,21 @@ public function search(Request $request)
     }
 }
 
+
+public function show($id)
+{
+    // Call the ontology service to get the vehicle by ID
+    $response = Http::get('http://localhost:9090/ontology/vehicle/' . $id);
+
+    if ($response->successful()) {
+        $vehicle = $response->json(); // Get the vehicle from the API
+        return view('vehicle.show', compact('vehicle'));
+    } else {
+        return redirect()->back()->withErrors(['error' => 'Vehicle not found.']);
+    }
+}
+
+
         
 
 

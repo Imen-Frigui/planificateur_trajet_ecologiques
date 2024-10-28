@@ -88,6 +88,18 @@ class WeatherController extends Controller
         }
     }
 
+    public function show($id)
+    {
+        $response = Http::get("http://localhost:9090/ontology/weather/{$id}");
+        $weather = $response->json();
+
+        if (isset($weather['error'])) {
+            return redirect()->route('weather.index')->withErrors(['error' => 'Weather condition not found.']);
+        }
+
+        return view('weather.show', compact('weather'));
+    }
+
 
 
 

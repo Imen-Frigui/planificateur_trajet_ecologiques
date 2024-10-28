@@ -31,6 +31,7 @@ Route::get('/weather/create', [WeatherController::class, 'create'])->name('weath
 Route::post('/weather', [WeatherController::class, 'store'])->name('weather.store');
 Route::delete('/weather/{id}', [WeatherController::class, 'destroy'])->name('weather.destroy');
 Route::get('/weather/search', [WeatherController::class, 'searchWeather'])->name('weather.search');
+Route::get('/weather/{id}', [WeatherController::class, 'show'])->name('weather.show');
 
 
 
@@ -48,4 +49,6 @@ Route::get('/vehicle/create', [VehicleController::class, 'create'])->name('vehic
 Route::post('/vehicle', [VehicleController::class, 'store'])->name('vehicle.store');
 Route::delete('/vehicle/{id}', [VehicleController::class, 'destroy'])->name('vehicle.destroy');
 Route::get('/vehicle/search', [VehicleController::class, 'search'])->name('vehicle.search');
+Route::get('/vehicle/{id}', [VehicleController::class, 'show'])->name('vehicle.show');
+
 
