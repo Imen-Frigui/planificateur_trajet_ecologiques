@@ -7,6 +7,9 @@ use App\Http\Controllers\WeatherController;
 use App\Http\Controllers\ChargingStationController;
 use App\Http\Controllers\DistanceController;
 
+use App\Http\Controllers\TrafficController;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -56,3 +59,23 @@ Route::put('/chargingStations/{uri}', [ChargingStationController::class, 'update
     Route::post('/distances', [DistanceController::class, 'store'])->name('distances.store');
     Route::delete('/distances/delete', [DistanceController::class, 'deleteDistance'])->name('distances.delete');
      
+
+    Route::get('/trafficConditions', [TrafficController::class, 'index'])->name('trafficConditions.index');
+
+    Route::post('/trafficConditions/add', [TrafficController::class, 'add']);
+    Route::get('/trafficConditions/create', [TrafficController::class, 'create'])->name('trafficConditions.create');
+    Route::post('/trafficConditions/store', [TrafficController::class, 'store'])->name('trafficConditions.store');
+    Route::delete('/traffic-condition', [TrafficController::class, 'deleteTrafficCondition'])->name('trafficConditions.delete');
+
+
+    
+    Route::get('/trafficConditions/{id}/edit', [TrafficController::class, 'edit'])
+    ->name('trafficConditions.edit')
+    ->where('id', '.*'); 
+
+
+Route::put('/trafficConditions/{id}', [TrafficController::class, 'update'])
+    ->name('trafficConditions.update')
+    ->where('id', '.*');
+
+    
